@@ -89,7 +89,8 @@ export function MjmlDomRender() {
         while (elements[0])
             elements?.[0]?.parentNode?.removeChild(elements[0])
         let parseHtml = div.innerHTML;
-        return parseHtml;
+        return "";
+        // return parseHtml;
         
     }, [mergeTags, pageData]);
 
