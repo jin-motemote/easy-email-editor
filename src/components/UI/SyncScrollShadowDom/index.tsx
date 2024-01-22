@@ -90,6 +90,9 @@ export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & { isAc
     }
   }, [ref, setFirstVisibleEle]);
 
+  console.log('sync scroll dom render', props.children);
+
+
   return (
     <>
       <div {...(rest as any)} ref={setRef}>
