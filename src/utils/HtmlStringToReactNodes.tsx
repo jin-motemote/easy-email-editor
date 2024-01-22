@@ -14,209 +14,214 @@ const domParser = new DOMParser();
 const errLog = console.error;
 
 export function getChildSelector(selector: string, index: number) {
-  return `${selector}-${index}`;
+    return `${selector}-${index}`;
 }
 
 console.error = (message?: any, ...optionalParams: any[]) => {
-  // ignore validateDOMNesting
-  if (
-    typeof message === 'string' &&
-    [
-      'Unsupported vendor-prefixed style property',
-      'validateDOMNesting',
-      'Invalid DOM',
-      'You provided a `checked` prop to a form field without an `onChange` handler',
-    ].some((item) => message.includes(item))
-  ) {
-    // no console
-  } else {
-    errLog(message, ...optionalParams);
-  }
+    // ignore validateDOMNesting
+    if (
+        typeof message === 'string' &&
+        [
+            'Unsupported vendor-prefixed style property',
+            'validateDOMNesting',
+            'Invalid DOM',
+            'You provided a `checked` prop to a form field without an `onChange` handler',
+        ].some((item) => message.includes(item))
+    ) {
+        // no console
+    } else {
+        errLog(message, ...optionalParams);
+    }
 };
 
 export interface HtmlStringToReactNodesOptions {
-  enabledMergeTagsBadge: boolean;
+    enabledMergeTagsBadge: boolean;
 }
 
 export function HtmlStringToReactNodes(
-  content: string,
-  option: HtmlStringToReactNodesOptions
+    content: string,
+    option: HtmlStringToReactNodesOptions
 ) {
-  let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
-  [...doc.getElementsByTagName('a')].forEach((node) => {
-    node.setAttribute('tabIndex', '-1');
-  });
-  [...doc.querySelectorAll(`.${MERGE_TAG_CLASS_NAME}`)].forEach((child) => {
-    const editNode = child.querySelector('div');
-    if (editNode) {
-      if (option.enabledMergeTagsBadge) {
-        editNode.innerHTML = MergeTagBadge.transform(editNode.innerHTML);
-      }
-    }
-  });
+    let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
 
-  const reactNode = (
-    <RenderReactNode selector={'0'} node={doc.documentElement} index={0} />
-  );
+    [...doc.getElementsByTagName('a')].forEach((node) => {
+        node.setAttribute('tabIndex', '-1');
+    });
+    [...doc.querySelectorAll(`.${MERGE_TAG_CLASS_NAME}`)].forEach((child) => {
+        const editNode = child.querySelector('div');
+        if (editNode) {
+            if (option.enabledMergeTagsBadge) {
+                editNode.innerHTML = MergeTagBadge.transform(editNode.innerHTML);
+            }
+        }
+    });
 
-  return reactNode;
+    const reactNode = (
+        <RenderReactNode selector={'0'} node={doc.documentElement} index={0}/>
+    );
+
+    return reactNode;
 }
 
 const RenderReactNode = React.memo(function ({
-  node,
-  index,
-  selector,
-}: {
-  node: HTMLElement;
-  index: number;
-  selector: string;
+                                                 node,
+                                                 index,
+                                                 selector,
+                                             }: {
+    node: HTMLElement;
+    index: number;
+    selector: string;
 }): React.ReactElement {
 
-  const attributes: { [key: string]: string; } = {
-    'data-selector': selector,
-  };
-  node.getAttributeNames?.().forEach((att) => {
-    if (att) {
-      attributes[att] = node.getAttribute(att) || '';
+    let newNode = node;
+    if (newNode.tagName === 'HTML') {
+        newNode.outerHTML = node.outerHTML.replace(/html/g, 'div');
     }
-  });
-
-  if (node.nodeType === Node.COMMENT_NODE) return <></>;
-
-  if (node.nodeType === Node.TEXT_NODE) {
-    return <>{node.textContent}</>;
-  }
-
-  if (node.nodeType === Node.ELEMENT_NODE) {
-    const tagName = node.tagName.toLowerCase();
-    if (tagName === 'meta') return <></>;
-
-    if (tagName === 'style') {
-      return createElement(tagName, {
-        key: index,
-        ...attributes,
-        dangerouslySetInnerHTML: { __html: node.textContent },
-      });
-    }
-
-    const blockType = getNodeTypeFromClassName(node.classList);
-    const idx = getNodeIdxFromClassName(node.classList);
-
-    if (blockType) {
-      if (idx) {
-        makeStandardContentEditable(node, blockType, idx);
-      }
-      makeBlockNodeContentEditable(node);
-    }
-
-    if (attributes['contenteditable'] === 'true') {
-
-      return createElement(tagName, {
-        key: performance.now(),
-        ...attributes,
-        style: getStyle(node.getAttribute('style')),
-        dangerouslySetInnerHTML: { __html: node.innerHTML },
-      });
-    }
-
-    const reactNode = createElement(tagName, {
-      key: index,
-      ...attributes,
-      style: getStyle(node.getAttribute('style')),
-      children:
-        node.childNodes.length === 0
-          ? null
-          : [...node.childNodes].map((n, i) => (
-            <RenderReactNode
-              selector={getChildSelector(selector, i)}
-              key={i}
-              node={n as any}
-              index={i}
-            />
-          )),
+    const attributes: { [key: string]: string; } = {
+        'data-selector': selector,
+    };
+    newNode.getAttributeNames?.().forEach((att) => {
+        if (att) {
+            attributes[att] = newNode.getAttribute(att) || '';
+        }
     });
 
-    return <>{reactNode}</>;
-  }
+    if (newNode.nodeType === Node.COMMENT_NODE) return <></>;
 
-  return <></>;
+    if (newNode.nodeType === Node.TEXT_NODE) {
+        return <>{newNode.textContent}</>;
+    }
+
+    if (newNode.nodeType === Node.ELEMENT_NODE) {
+        const tagName = newNode.tagName.toLowerCase();
+        if (tagName === 'meta') return <></>;
+
+        if (tagName === 'style') {
+            return createElement(tagName, {
+                key: index,
+                ...attributes,
+                dangerouslySetInnerHTML: { __html: newNode.textContent },
+            });
+        }
+
+        const blockType = getNodeTypeFromClassName(newNode.classList);
+        const idx = getNodeIdxFromClassName(newNode.classList);
+
+        if (blockType) {
+            if (idx) {
+                makeStandardContentEditable(newNode, blockType, idx);
+            }
+            makeBlockNodeContentEditable(newNode);
+        }
+
+        if (attributes['contenteditable'] === 'true') {
+
+            return createElement(tagName, {
+                key: performance.now(),
+                ...attributes,
+                style: getStyle(newNode.getAttribute('style')),
+                dangerouslySetInnerHTML: { __html: newNode.innerHTML },
+            });
+        }
+
+        const reactNode = createElement(tagName, {
+            key: index,
+            ...attributes,
+            style: getStyle(newNode.getAttribute('style')),
+            children:
+                newNode.childNodes.length === 0
+                    ? null
+                    : [...newNode.childNodes].map((n, i) => (
+                        <RenderReactNode
+                            selector={getChildSelector(selector, i)}
+                            key={i}
+                            node={n as any}
+                            index={i}
+                        />
+                    )),
+        });
+
+        return <>{reactNode}</>;
+    }
+
+    return <></>;
 });
 
 function getStyle(styleText: string | null) {
-  if (!styleText) return undefined;
-  return styleText.split(';').reduceRight((a: any, b: any) => {
-    const arr = b.split(/\:(?!\/)/);
-    if (arr.length < 2) return a;
-    a[camelCase(arr[0])] = arr[1];
-    return a;
-  }, {});
+    if (!styleText) return undefined;
+    return styleText.split(';').reduceRight((a: any, b: any) => {
+        const arr = b.split(/\:(?!\/)/);
+        if (arr.length < 2) return a;
+        a[camelCase(arr[0])] = arr[1];
+        return a;
+    }, {});
 }
 
 function createElement(
-  type: string,
-  props?: React.ClassAttributes<Element> & {
-    style?: {} | undefined;
-    children?: JSX.Element[] | null;
-    key: string | number;
-    tabIndex?: string;
-    class?: string;
-    role?: string;
-    src?: string;
-    dangerouslySetInnerHTML?: any;
-  }
-) {
-  if (props?.class && props.class.includes('email-block')) {
-    const blockType = getNodeTypeFromClassName(props.class);
-    if (![BasicType.TEXT].includes(blockType as any)) {
-      props.role = 'tab';
-      props.tabIndex = '0';
+    type: string,
+    props?: React.ClassAttributes<Element> & {
+        style?: {} | undefined;
+        children?: JSX.Element[] | null;
+        key: string | number;
+        tabIndex?: string;
+        class?: string;
+        role?: string;
+        src?: string;
+        dangerouslySetInnerHTML?: any;
     }
-    props.key = props.key + props.class;
-  }
+) {
+    if (props?.class && props.class.includes('email-block')) {
+        const blockType = getNodeTypeFromClassName(props.class);
+        if (![BasicType.TEXT].includes(blockType as any)) {
+            props.role = 'tab';
+            props.tabIndex = '0';
+        }
+        props.key = props.key + props.class;
+    }
 
-  return React.createElement(type, props);
+    return React.createElement(type, props);
 }
 
 function makeBlockNodeContentEditable(node: ChildNode) {
-  if (!(node instanceof Element)) return;
-  const type = getContentEditableTypeFromClassName(node.classList);
-  const idx = getContentEditableIdxFromClassName(node.classList);
+    if (!(node instanceof Element)) return;
+    const type = getContentEditableTypeFromClassName(node.classList);
+    const idx = getContentEditableIdxFromClassName(node.classList);
 
-  if (isTextBlock(type)) {
-    const editNode = node.querySelector('div');
-    if (editNode) {
-      editNode.setAttribute('contentEditable', 'true');
-      editNode.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.RichText);
-      editNode.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
+    if (isTextBlock(type)) {
+        const editNode = node.querySelector('div');
+        if (editNode) {
+            editNode.setAttribute('contentEditable', 'true');
+            editNode.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.RichText);
+            editNode.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
+        }
+    } else if (isButtonBlock(type)) {
+        const editNode = node.querySelector('a') || node.querySelector('p');
+        if (editNode) {
+            editNode.setAttribute('contentEditable', 'true');
+            editNode.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.Text);
+            editNode.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
+        }
+    } else if (isNavbarBlock(type)) {
+        node.setAttribute('contentEditable', 'true');
+        node.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.Text);
+        node.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
+
     }
-  } else if (isButtonBlock(type)) {
-    const editNode = node.querySelector('a') || node.querySelector('p');
-    if (editNode) {
-      editNode.setAttribute('contentEditable', 'true');
-      editNode.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.Text);
-      editNode.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
-    }
-  } else if (isNavbarBlock(type)) {
-    node.setAttribute('contentEditable', 'true');
-    node.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.Text);
-    node.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
 
-  }
-
-  node.childNodes.forEach(makeBlockNodeContentEditable);
+    node.childNodes.forEach(makeBlockNodeContentEditable);
 
 }
 
 function makeStandardContentEditable(node: HTMLElement, blockType: string, idx: string) {
-  if (isTextBlock(blockType) || isButtonBlock(blockType)) {
-    node.classList.add(...getContentEditableClassName(blockType, `${idx}.data.value.content`));
-  }
-  if (isNavbarBlock(blockType)) {
-    node.querySelectorAll('.mj-link').forEach((anchor, index) => {
+    if (isTextBlock(blockType) || isButtonBlock(blockType)) {
+        node.classList.add(...getContentEditableClassName(blockType, `${idx}.data.value.content`));
+    }
+    if (isNavbarBlock(blockType)) {
+        node.querySelectorAll('.mj-link').forEach((anchor, index) => {
 
-      anchor.classList.add(...getContentEditableClassName(blockType, `${idx}.data.value.links.${index}.content`));
-    });
-  }
+            anchor.classList.add(...getContentEditableClassName(blockType, `${idx}.data.value.links.${index}.content`));
+        });
+    }
 }
 
 // Ending tags

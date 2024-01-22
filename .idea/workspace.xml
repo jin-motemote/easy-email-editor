@@ -6,7 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="bf28580c-f856-45fa-9e54-24ad9ee73405" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UI/SyncScrollShadowDom/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UI/SyncScrollShadowDom/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/components/EmailEditor/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/EmailEditor/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/components/Provider/EmailEditorProvider/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/Provider/EmailEditorProvider/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/components/Provider/RecordProvider/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/Provider/RecordProvider/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/hooks/useActiveTab.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/hooks/useActiveTab.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/hooks/useBlock.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/hooks/useBlock.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/hooks/useDataTransfer.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/hooks/useDataTransfer.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/hooks/useEditorContext.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/hooks/useEditorContext.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/hooks/useEditorProps.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/hooks/useEditorProps.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/index.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/locales.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/EventManager.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/EventManager.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/HtmlStringToReactNodes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/HtmlStringToReactNodes.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -75,7 +87,7 @@
       <updated>1705665379432</updated>
       <workItem from="1705665380468" duration="6154000" />
       <workItem from="1705917721666" duration="3823000" />
-      <workItem from="1705929006039" duration="2778000" />
+      <workItem from="1705929006039" duration="3902000" />
     </task>
     <servers />
   </component>
