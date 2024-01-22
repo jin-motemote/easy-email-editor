@@ -80,7 +80,17 @@ export function MjmlDomRender() {
                 dataSource: cloneDeep(mergeTags),
             })
         ).html;
-        return renderHtml;
+
+
+
+        const div = document.createElement('div');
+        div.innerHTML = renderHtml;
+        const elements = div.getElementsByTagName('html');
+        while (elements[0])
+            elements?.[0]?.parentNode?.removeChild(elements[0])
+        let parseHtml = div.innerHTML;
+        return parseHtml;
+        
     }, [mergeTags, pageData]);
 
     console.log(`mjmlDomRender `, html);
