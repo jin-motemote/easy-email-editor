@@ -27,7 +27,7 @@ export const IframeComponent = ({ children, title, windowRef, ...props }: Props)
     <iframe
       title={title}
       srcDoc={
-        '<!doctype html> <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"> <head></head> <body> </body> </html>'
+        '<!doctype html><div></div>'
       }
       {...(props as any)}
       onLoad={onLoad}
