@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf28580c-f856-45fa-9e54-24ad9ee73405" name="Changes" comment="" />
+    <list default="true" id="bf28580c-f856-45fa-9e54-24ad9ee73405" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/EmailEditor/components/EditEmailPreview/components/MjmlDomRender.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EmailEditor/components/EditEmailPreview/components/MjmlDomRender.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/EmailEditor/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EmailEditor/index.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +44,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/Users/dev/easy-email-editor/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -70,7 +74,8 @@
       <option name="presentableId" value="Default" />
       <updated>1705665379432</updated>
       <workItem from="1705665380468" duration="6154000" />
-      <workItem from="1705917721666" duration="3674000" />
+      <workItem from="1705917721666" duration="3823000" />
+      <workItem from="1705929006039" duration="34000" />
     </task>
     <servers />
   </component>
