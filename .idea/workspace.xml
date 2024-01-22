@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf28580c-f856-45fa-9e54-24ad9ee73405" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/UI/SyncScrollShadowDom/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UI/SyncScrollShadowDom/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/HtmlStringToReactNodes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/HtmlStringToReactNodes.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +75,7 @@
       <updated>1705665379432</updated>
       <workItem from="1705665380468" duration="6154000" />
       <workItem from="1705917721666" duration="3823000" />
-      <workItem from="1705929006039" duration="1605000" />
+      <workItem from="1705929006039" duration="2098000" />
     </task>
     <servers />
   </component>

@@ -71,6 +71,13 @@ const RenderReactNode = React.memo(function ({
   index: number;
   selector: string;
 }): React.ReactElement {
+  if(node.tagName === 'HTML') {
+    return <></>;
+  }
+  if(node.tagName === 'BODY') {
+    return <></>;
+  }
+
   const attributes: { [key: string]: string; } = {
     'data-selector': selector,
   };

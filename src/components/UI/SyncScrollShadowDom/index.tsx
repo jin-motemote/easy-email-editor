@@ -92,7 +92,6 @@ export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & { isAc
 
   console.log('sync scroll dom render', props.children);
 
-
   return (
     <>
       <div {...(rest as any)} ref={setRef}>
