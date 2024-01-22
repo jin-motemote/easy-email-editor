@@ -4,5 +4,5 @@ export declare function useEditorContext(): {
     formHelpers: import("final-form").FormApi<Record<string, any>, Partial<Record<string, any>>>;
     initialized: boolean;
     setInitialized: import("react").Dispatch<import("react").SetStateAction<boolean>>;
-    pageData: import("../easy-email-core/lib").IPage;
+    pageData: import("easy-email-core").IPage;
 };
